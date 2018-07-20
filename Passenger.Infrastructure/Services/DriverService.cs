@@ -19,6 +19,7 @@ namespace Passenger.Infrastructure.Services
             return new DriverDTO
             {
                 UserId = driver.UserId,
+                
                 Vehicle = driver.Vehicle
             };
         }

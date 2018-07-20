@@ -6,8 +6,8 @@ namespace Passenger.Infrastructure.DTO
 {
     public class DriverDTO
     {
-        public Guid Id {get; set;}
-        public Vehicle Vehicle{get; set;}
+        public Guid UserId {get; set;}
+        public Vehicle Vehicle{get; set;}  // do każdego należy robić osobne DTO 
         public IEnumerable<Route> Routes {get; set;}
         public IEnumerable<DailyRoute> DailyRoutes {get; set;}
 
