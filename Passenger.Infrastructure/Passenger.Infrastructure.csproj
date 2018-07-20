@@ -1,7 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <ItemGroup>
+    <ProjectReference Include="..\Passenger.Core\Passenger.Core.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Passenger.Infrastructure</AssemblyName>
+    <PackageId>Passenger.Infrastructure</PackageId>
+    <!-- <NetStandardImplicitPackageVersion>2.1.2</NetStandardImplicitPackageVersion> -->
   </PropertyGroup>
 
 </Project>

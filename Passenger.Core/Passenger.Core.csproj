@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Passenger.Core</AssemblyName>
+    <PackageId>Passenger.Core</PackageId>
+    <!-- <NetStandardImplicitPackageVersion>2.1.2</NetStandardImplicitPackageVersion> -->
   </PropertyGroup>
 
 </Project>
