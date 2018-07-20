@@ -48,5 +48,6 @@ namespace Passenger.Api
             app.UseHttpsRedirection();
             app.UseMvc();
         }
+        
     }
 }

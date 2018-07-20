@@ -9,5 +9,18 @@ namespace Passenger.Core.Domain
         public Route Route { get; protected set; }
         public IEnumerable<PassengerNode> PassengerNodes {get ; protected set;}
 
+        protected DailyRoute()
+        {
+        }
+        public DailyRoute(Route route)
+        {
+            Id = new Guid();
+            Route = route;
+        }
+        // public IEnumerable<PassengerNode> SetPassengerNode()
+        // {
+        //     yield return;
+        // }
+           
     }
 }

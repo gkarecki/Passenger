@@ -25,7 +25,7 @@ namespace Passenger.Infrastructure.Services
             };
         }
 
-        public void Register(string email, string username, string password)
+        public void Register(string email, string username, string fullName, string password)
         {
             var user = _userRepository.Get(email);
             if (user != null)
@@ -33,7 +33,7 @@ namespace Passenger.Infrastructure.Services
                 throw new Exception($"User with email: '{email} already exists.");
             }
             var salt = Guid.NewGuid().ToString("N");
-            user = new User(email, username, password, salt);
+            user = new User(email, username, password, fullName, salt);
             _userRepository.Add(user);
         }
     }
