@@ -1,4 +1,5 @@
 using System;
+using AutoMapper;
 using Passenger.Core.Domain;
 using Passenger.Core.Repositories;
 using Passenger.Infrastructure.DTO;
@@ -8,21 +9,17 @@ namespace Passenger.Infrastructure.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+        private readonly IMapper _mapper;
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
         }
 
         public UserDTO Get(string email)
         {
             var user = _userRepository.Get(email);
-            return new UserDTO
-            {
-                Id = user.Id,
-                Username = user.Username,
-                Email  = user.Email,
-                FullName = user.FullName
-            };
+            return _mapper.Map<User, UserDTO>(user);
         }
 
         public void Register(string email, string username, string fullName, string password)
@@ -33,7 +30,7 @@ namespace Passenger.Infrastructure.Services
                 throw new Exception($"User with email: '{email} already exists.");
             }
             var salt = Guid.NewGuid().ToString("N");
-            user = new User(email, username, password, fullName, salt);
+            user = new User(email, username, fullName, password, salt);
             _userRepository.Add(user);
         }
     }

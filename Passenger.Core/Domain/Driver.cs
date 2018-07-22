@@ -14,10 +14,11 @@ namespace Passenger.Core.Domain
         protected Driver()
         {}
 
-        public Driver(Guid userId)
+        public Driver(Guid userId, string name, string brand, int seats)
         {
             // Id = new Guid();
             SetUserId(userId);
+            SetVehicle(name , brand, seats);
         }
         public void SetUserId(Guid userId)
         {
@@ -43,10 +44,11 @@ namespace Passenger.Core.Domain
                 return;
             }
 
-            Vehicle vehicle = new Vehicle(name, brand, seats);
-            Vehicle = vehicle;
+            // Vehicle vehicle = new Vehicle(name, brand, seats); //zastąpiłem metodą Create()
+            // Vehicle = vehicle;
+            Vehicle = Vehicle.Create(name, brand, seats);
         }
     }
 }
 
-// To do: konstrukotry protected wszędzie ; konstruktory publiczne, gdzie bedziemy ustatlali identyfikatory ; będziemy pamiętali, ze będzie przekazany użytkowanik, jego pojazd ;
+// To do: konstrukotry protected wszędzie ; konstruktory publiczne, gdzie bedziemy ustatlali identyfikatory ; będziemy pamiętali, ze będzie przekazany użytkowanik, jego pojazd;

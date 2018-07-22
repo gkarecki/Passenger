@@ -30,7 +30,7 @@ namespace Passenger.Infrastructure.Services
             {
                 throw new Exception($"User with id: '{id} already exists.");
             }
-            driver = new Driver(id); 
+            driver = new Driver(id,vehicle.Name, vehicle.Brand, vehicle.Seats); 
             _driverRepository.Add(driver);
         }
     }
