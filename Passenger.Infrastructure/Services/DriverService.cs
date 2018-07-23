@@ -1,4 +1,6 @@
 using System;
+using System.Threading.Tasks;
+using AutoMapper;
 using Passenger.Core.Domain;
 using Passenger.Core.Repositories;
 using Passenger.Infrastructure.DTO;
@@ -8,30 +10,27 @@ namespace Passenger.Infrastructure.Services
     public class DriverService : IDriverService
     {
         private readonly IDriverRepository _driverRepository;
-        public DriverService(IDriverRepository driverRepository)
+        private readonly IMapper _mapper;
+        public DriverService(IDriverRepository driverRepository, IMapper mapper)
         {
             _driverRepository = driverRepository;
+            _mapper = mapper;
         }
 
-        public DriverDTO Get(Guid id)
+        public async Task<DriverDTO> GetAsync(Guid id)
         {
-            var driver = _driverRepository.Get(id);
-            return new DriverDTO
-            {
-                UserId = driver.UserId,
-                
-                Vehicle = driver.Vehicle
-            };
+            var driver = await _driverRepository.GetAsync(id);
+            return  _mapper.Map<Driver, DriverDTO>(driver);
         }
-        public void AddAsDriver(Guid id, Vehicle vehicle)
+        public async Task AddAsDriverAsync(Guid id, Vehicle vehicle)
         {
-            var driver = _driverRepository.Get(id);
+            var driver = await _driverRepository.GetAsync(id);
             if (driver != null)
             {
                 throw new Exception($"User with id: '{id} already exists.");
             }
             driver = new Driver(id,vehicle.Name, vehicle.Brand, vehicle.Seats); 
-            _driverRepository.Add(driver);
+            await _driverRepository.AddAsync(driver);
         }
     }
 }

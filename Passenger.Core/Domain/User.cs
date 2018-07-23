@@ -102,6 +102,8 @@ namespace Passenger.Core.Domain
             {
                 FullName = fullName;   
             }
+            // FullName = fullName;   
+
         }
     }
 }

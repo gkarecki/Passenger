@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Passenger.Core.Domain;
 using Passenger.Infrastructure.DTO;
 
@@ -6,8 +7,8 @@ namespace Passenger.Infrastructure.Services
 {
     public interface IDriverService
     {
-        DriverDTO Get(Guid userId);
+        Task<DriverDTO> GetAsync(Guid userId);
 
-        void AddAsDriver(Guid UserId, Vehicle vehicle);
+        Task AddAsDriverAsync(Guid UserId, Vehicle vehicle);
     }
 }

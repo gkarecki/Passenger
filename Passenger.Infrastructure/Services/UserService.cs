@@ -33,8 +33,6 @@ namespace Passenger.Infrastructure.Services
             var salt = Guid.NewGuid().ToString("N");
             user = new User(email, username, fullName, password, salt);
             await _userRepository.AddAsync(user);
-            
-
         }
     }
 }
