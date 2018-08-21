@@ -5,7 +5,7 @@ using Passenger.Core.Domain;
 
 namespace Passenger.Core.Repositories
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository
     {
         //wzorzec, którzy tworzy abstrakcje nad tym gdzie składujemy nasze dane 
         Task<IEnumerable<User>> GetAllAsync();

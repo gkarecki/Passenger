@@ -8,11 +8,13 @@ namespace Passenger.Core.Domain
         protected PassengerNode()
         {}
 
-        public PassengerNode(Node node, Passenger passenger)
+        public PassengerNode(Passenger passenger, Node node)
         {
-            SetNode(Node);
+            SetNode(node);
             SetPassenger(passenger);
         }
+        public static PassengerNode Create(Passenger passenger, Node node)
+            => new PassengerNode(passenger, node);
         public void SetNode(Node node)
         {
             if (Node == node)
