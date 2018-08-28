@@ -4,7 +4,6 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyName>Passenger.Infrastructure</AssemblyName>
     <PackageId>Passenger.Infrastructure</PackageId>
-    <!-- <NetStandardImplicitPackageVersion>2.1.2</NetStandardImplicitPackageVersion> -->
   </PropertyGroup>
 
   <ItemGroup>
