@@ -7,14 +7,14 @@ namespace Passenger.Infrastructure.Handlers.Users
 {
     public class CreateUserHandler : ICommandHandler<CreateUser>
     {
-        private readonly IUserService _userservice;
+        private readonly IUserService _userService;
         public CreateUserHandler(IUserService userService)
         {
-            _userservice = userService;
+            _userService = userService;
         }
         public async Task HandnleAsync(CreateUser command)
         {
-            await _userservice.RegisterAsync(command.Email, command.Username, command.FullName, command.Password);
+            await _userService.RegisterAsync(command.Email, command.Username, command.FullName, command.Password);
         }
     }
 }

@@ -26,27 +26,15 @@ namespace Passenger.Core.Domain
             SetEmail(email);
             SetUsername(username);
             SetFullName(fullName);
-            SetPassword(password, salt);
+            SetPassword(password);
             CreateAt = DateTime.UtcNow;
-            // Email = email.ToLowerInvariant(); //musi być unikalny
-            // Username = username; //czy username pusty, czy nie zawiera niedozwolonych znaków 
-            // Password = password; //czy nie puste
-            // Salt = salt;
         }
 
-        public void SetPassword(string password, string salt) //To do: use "salt"
+        public void SetPassword(string password)
         {
             if(string.IsNullOrWhiteSpace(password))
             {
                 throw new Exception("Please provide valid data. There is a null or white space. ");
-            }
-            else if (password.Length < 5)
-            {
-                throw new Exception("Please provide valid data. Password is too short");
-            }
-            else if (password.Length > 50)
-            {
-                throw new Exception("Please provide valid data. Password is too long");
             }
             else if (Password == password)
             {
@@ -76,14 +64,14 @@ namespace Passenger.Core.Domain
             {
                 throw new Exception("Username is invalid.");
             }
-            // if(string.IsNullOrWhiteSpace(username))
-            // {
-            //     throw new Exception("Please provide valid data. There is a null or white space. ");
-            // }
-            // else if (Username == username)
-            // {
-            //     return;
-            // }
+            else if(string.IsNullOrWhiteSpace(username))
+            {
+                throw new Exception("Please provide valid data. There is a null or white space. ");
+            }
+            else if (Username == username)
+            {
+                return;
+            }
 
             Username = username;
         }
@@ -98,11 +86,7 @@ namespace Passenger.Core.Domain
             {
                 return;
             }
-            else if(fullName.Contains(" "))
-            {
-                FullName = fullName;   
-            }
-            // FullName = fullName;   
+            FullName = fullName;   
 
         }
     }
