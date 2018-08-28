@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,12 +14,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Passenger.Core.Repositories;
 using Passenger.Infrastructure.IoC;
 using Passenger.Infrastructure.IoC.Modules;
 using Passenger.Infrastructure.Mappers;
 using Passenger.Infrastructure.Repositories;
 using Passenger.Infrastructure.Services;
+using Passenger.Infrastructure.Settings;
 
 namespace Passenger.Api
 {
@@ -33,7 +37,30 @@ namespace Passenger.Api
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
-        {            
+        {
+            services.AddAuthorization( x => x.AddPolicy("admin", p => p.RequireRole("admin")) );
+
+            var jwtSettingsSection = Configuration.GetSection("Jwt"); // configure strongly typed settings objects
+            services.Configure<JwtSettings>(jwtSettingsSection);
+            
+            //JWT
+            var jwtSettings = jwtSettingsSection.Get<JwtSettings>();
+            var key = Encoding.UTF8.GetBytes(jwtSettings.Key);
+            services.AddAuthentication(x => {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x => {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidIssuer = jwtSettings.Issuer,
+                        ValidateAudience = false
+                    };
+                });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             
             var builder = new ContainerBuilder();
@@ -56,7 +83,7 @@ namespace Passenger.Api
             {
                 app.UseHsts();
             }
-
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
             appLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Passenger.Infrastructure.Commands.Users;
 using Passenger.Infrastructure.DTO;
@@ -20,7 +21,8 @@ namespace Passenger.Api.Controllers
             _settigns = settings;
             _userservice = userService;
         }
-        // GET api/values/5
+
+        [Authorize(Policy = "admin")]
         [HttpGet("{email}")]
         public async Task<IActionResult> GetAsync(string email)
         {
