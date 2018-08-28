@@ -33,12 +33,7 @@ namespace Passenger.Api
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
-        {
-            services.AddScoped<IUserRepository, InMemoryUserRepository>();
-            services.AddScoped<IDriverRepository, InMemoryDriverRepository>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IDriverService, DriverService>();
-            
+        {            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             
             var builder = new ContainerBuilder();
