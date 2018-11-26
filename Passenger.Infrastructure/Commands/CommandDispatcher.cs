@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using Autofac;
-using Passenger.Infrastructure.Commands.Users;
 
 namespace Passenger.Infrastructure.Commands
 {
@@ -20,7 +19,7 @@ namespace Passenger.Infrastructure.Commands
                     $"Command {typeof(T).Name} can not be null.");
             }
             var handler = _context.Resolve<ICommandHandler<T>>();
-            await handler.HandnleAsync(command);
+            await handler.HandleAsync(command);
         }
     }
 }

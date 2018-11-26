@@ -1,6 +1,7 @@
-namespace Passenger.Infrastructure.Commands.Users
+using System;
+namespace Passenger.Infrastructure.Commands
 {
-    //Marked inteface - mamy jakąś komendę i wszystko co implementuje ten interfejs jest komendą
+    //Marker inteface - mamy jakąś komendę i wszystko co implementuje ten interfejs jest komendą
     public interface ICommand
     {
         

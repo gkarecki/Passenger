@@ -49,7 +49,7 @@ namespace Passenger.Tests.EndToEnd.Controllers
                 Email = "test@email.com",
                 Username = "test",
                 Password = "secret",
-                FullName = "testfull"
+                Role = "admin"
             };
             var payload = GetPayload(command);
             var response = await Client.PostAsync("users", payload);

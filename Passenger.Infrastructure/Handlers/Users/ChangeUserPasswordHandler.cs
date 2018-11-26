@@ -6,7 +6,7 @@ namespace Passenger.Infrastructure.Handlers.Users
 {
     public class ChangeUserPasswordHandler : ICommandHandler<ChangeUserPassword>
     {
-        public async Task HandnleAsync(ChangeUserPassword command)
+        public async Task HandleAsync(ChangeUserPassword command)
         {
             await Task.CompletedTask;
         }
