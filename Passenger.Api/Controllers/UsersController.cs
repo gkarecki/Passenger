@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Passenger.Infrastructure.Commands;
 using Passenger.Infrastructure.Commands.Users;
-using Passenger.Infrastructure.DTO;
 using Passenger.Infrastructure.Services;
 using Passenger.Infrastructure.Settings;
 

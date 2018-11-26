@@ -20,5 +20,14 @@ namespace Passenger.Api
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
+        // public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        //     WebHost.CreateDefaultBuilder(args)
+        //         .UseEnvironment("Development") 
+        //         .UseContentRoot(Directory.GetCurrentDirectory()) 
+        //         .UseConfiguration(new ConfigurationBuilder() 
+        //             .SetBasePath(Directory.GetCurrentDirectory()) 
+        //             .AddJsonFile("appsettings.json") 
+        //             .Build()) 
+        //         .UseStartup<Startup>(); 
     }
 }

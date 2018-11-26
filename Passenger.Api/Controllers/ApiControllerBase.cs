@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Passenger.Infrastructure.Commands;
 using Passenger.Infrastructure.Commands.Users;
 
 namespace Passenger.Api.Controllers
@@ -7,9 +8,10 @@ namespace Passenger.Api.Controllers
     public abstract class ApiControllerBase : Controller
     {
         protected readonly ICommandDispatcher CommandDispatcher;
+ 
         protected ApiControllerBase(ICommandDispatcher commandDispatcher)
         {
-            CommandDispatcher = commandDispatcher;
+            this.CommandDispatcher = commandDispatcher;
         }
     }
 }

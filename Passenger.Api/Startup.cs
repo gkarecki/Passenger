@@ -39,7 +39,7 @@ namespace Passenger.Api
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddAuthorization( x => x.AddPolicy("admin", p => p.RequireRole("admin")) );
-
+            services.AddMemoryCache();
             var key = Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]);
             services.AddAuthentication(x => {
                     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
