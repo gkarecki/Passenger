@@ -20,9 +20,9 @@ namespace Passenger.Core.Domain
         {
         }
 
-        public User(string email, string username,string fullName, string password, string salt) // konieczna walidacja (wyrażenia regularne czyli regex)
+        public User(Guid userId,string email, string username,string fullName, string password, string salt) // konieczna walidacja (wyrażenia regularne czyli regex)
         {
-            Id = Guid.NewGuid();
+            Id = userId;
             SetEmail(email);
             SetUsername(username);
             SetFullName(fullName);

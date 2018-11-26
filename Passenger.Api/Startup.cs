@@ -79,6 +79,12 @@ namespace Passenger.Api
                 app.UseHsts();
             }
             
+            var generalSettings = app.ApplicationServices.GetService<GeneralSettings>();
+            if(generalSettings.SeedData)
+            {
+                var dataInitializer = app.ApplicationServices.GetService<IDataInitializer>();
+                dataInitializer.SeedAsync();
+            }
 
             app.UseAuthentication();
             app.UseHttpsRedirection();
