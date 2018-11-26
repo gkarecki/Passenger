@@ -1,3 +1,4 @@
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -5,18 +6,21 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using NUnit.Framework;
 using Passenger.Api;
 using Passenger.Infrastructure.Commands.Users;
 using Passenger.Infrastructure.DTO;
-using Xunit;
+// using Xunit;
 
 namespace Passenger.Tests.EndToEnd.Controllers
 {
+    [TestFixture]
     public class UsersControllerTests : ControllerTestsBase
     {
-
-        [Fact]
+        // [Fact]
+        [Test]
         public async Task given_valid_email_user_shuld_exists()
         {
             // Act
@@ -26,7 +30,8 @@ namespace Passenger.Tests.EndToEnd.Controllers
             // Assert.Equal(user.Email, email);
         }
 
-        [Fact]
+        // [Fact]
+        [Test]
         public async Task given_valid_email_user_shuld_not_exists()
         {
             // Act
@@ -35,7 +40,8 @@ namespace Passenger.Tests.EndToEnd.Controllers
             
             response.StatusCode.Should().BeEquivalentTo(HttpStatusCode.NotFound);
         }
-        [Fact]
+        // [Fact]
+        [Test]
         public async Task given_unique_email_user_shuld_be_created()
         {
             var command = new CreateUser

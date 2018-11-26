@@ -4,15 +4,18 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using NUnit.Framework;
 using Passenger.Api;
 using Passenger.Infrastructure.Commands.Users;
-using Xunit;
+// using Xunit;
 
 namespace Passenger.Tests.EndToEnd.Controllers
 {
+    [TestFixture]
     public class AccountControllerTest : ControllerTestsBase
     {
-        [Fact]
+        //[Fact]
+        [Test]
         public async Task given_valid_current_and_new_password_it_should_be_changed()
         {
             var command = new ChangeUserPassword
@@ -24,8 +27,6 @@ namespace Passenger.Tests.EndToEnd.Controllers
             var response = await Client.PutAsync("account/password", payload);
             response.StatusCode.Should().BeEquivalentTo(HttpStatusCode.NoContent);
         }
-
-        
 
     }
 }

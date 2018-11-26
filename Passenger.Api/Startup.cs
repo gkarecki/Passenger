@@ -40,12 +40,13 @@ namespace Passenger.Api
         {
             services.AddAuthorization( x => x.AddPolicy("admin", p => p.RequireRole("admin")) );
 
-            var jwtSettingsSection = Configuration.GetSection("Jwt"); // configure strongly typed settings objects
-            services.Configure<JwtSettings>(jwtSettingsSection);
+            // var jwtSettingsSection = Configuration.GetSection("Jwt"); // configure strongly typed settings objects
+            // services.Configure<JwtSettings>(jwtSettingsSection);
             
             //JWT
-            var jwtSettings = jwtSettingsSection.Get<JwtSettings>();
-            var key = Encoding.UTF8.GetBytes(jwtSettings.Key);
+            // var jwtSettings = jwtSettingsSection.Get<JwtSettings>();
+            // var key = Encoding.UTF8.GetBytes("very_secret_secret123_zerkow123_czchow123"); //ONLY FOR TESTS!
+            var key = Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]);
             services.AddAuthentication(x => {
                     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -56,7 +57,8 @@ namespace Passenger.Api
                     x.TokenValidationParameters = new TokenValidationParameters
                     {
                         IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidIssuer = jwtSettings.Issuer,
+                        // ValidIssuer = "http://localhost:5000", //ONLY FOR TESTS!
+                        ValidIssuer = Configuration["Jwt:Issuer"],
                         ValidateAudience = false
                     };
                 });
@@ -83,6 +85,8 @@ namespace Passenger.Api
             {
                 app.UseHsts();
             }
+            
+
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();

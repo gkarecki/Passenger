@@ -1,18 +1,21 @@
 
 using System.Threading.Tasks;
 using FluentAssertions;
-using Xunit;
+// using Xunit;
 using Moq;
 using Passenger.Core.Repositories;
 using AutoMapper;
 using Passenger.Infrastructure.Services;
 using Passenger.Core.Domain;
+using NUnit.Framework;
 
 namespace Passenger.Tests.Services
 {
+    [TestFixture]
     public class UserServiceTests
     {
-        [Fact]
+        // [Fact]
+        [Test]
         public async Task register_async_should_invoke_add_async_on_repository()
         {
             var userRepositoryMock = new Mock<IUserRepository>();
@@ -27,7 +30,8 @@ namespace Passenger.Tests.Services
             userRepositoryMock.Verify(x => x.AddAsync(It.IsAny<User>()), Times.Once);
         }
 
-        [Fact]
+        // [Fact]
+        [Test]
         public async Task when_callig_get_async_and_user_exists_it_should_invoke_user_repository_get_async()
         {
             var encrypterMock = new Mock<IEncrypter>();
@@ -44,7 +48,8 @@ namespace Passenger.Tests.Services
             
         }
         
-        [Fact]
+        // [Fact]
+        [Test]
         public async Task when_calling_get_async_and_user_does_not_exist_it_should_invoke_user_repository_get_async()
         {
             var encrypterMock = new Mock<IEncrypter>();

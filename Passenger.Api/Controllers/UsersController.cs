@@ -22,7 +22,7 @@ namespace Passenger.Api.Controllers
             _userservice = userService;
         }
 
-        [Authorize(Policy = "admin")]
+        // [Authorize(Policy = "admin")]
         [HttpGet("{email}")]
         public async Task<IActionResult> GetAsync(string email)
         {
