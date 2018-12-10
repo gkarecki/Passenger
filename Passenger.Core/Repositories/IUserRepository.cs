@@ -8,7 +8,7 @@ namespace Passenger.Core.Repositories
     public interface IUserRepository : IRepository
     {
         //wzorzec, który tworzy abstrakcje nad tym gdzie składujemy nasze dane 
-        Task<IEnumerable<User>> GetAllAsync();
+        Task<IEnumerable<User>> BrowseAsync();
         Task<User> GetAsync(Guid id);
         Task<User> GetAsync(string email);
         Task AddAsync(User user);

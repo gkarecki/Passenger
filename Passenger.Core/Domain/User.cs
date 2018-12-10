@@ -14,19 +14,21 @@ namespace Passenger.Core.Domain
         public string Username {get; protected set;}
 
         public string FullName {get; protected set;}
+        public string Role {get; protected set;}
         public DateTime CreateAt {get; protected set;}
 
-        protected User() //niektóre bibloteki wymagają tego konstruktora, aby nie mieć kłopotu z serializacją naszych danych (odczytem)
-        {
+        protected User()    //niektóre bibloteki wymagają tego konstruktora, aby nie mieć kłopotu z serializacją naszych danych (odczytem)
+        {                   //some libraries requires this contructor to serialize data without any problem ( read data )
         }
 
-        public User(Guid userId,string email, string username,string fullName, string password, string salt) // konieczna walidacja (wyrażenia regularne czyli regex)
+        public User(Guid userId,string email, string username, string fullName, string password, string salt, string role) 
         {
             Id = userId;
             SetEmail(email);
             SetUsername(username);
             SetFullName(fullName);
             SetPassword(password);
+            Role = role;
             CreateAt = DateTime.UtcNow;
         }
 

@@ -30,7 +30,13 @@ namespace Passenger.Api.Controllers
             }
             return Json(user);
         }
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var users = await _userservice.BrowseAsync();
 
+            return Json(users);
+        } 
         [HttpPost("")]
         public async Task<IActionResult> Post([FromBody]CreateUser command)
         {

@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Passenger.Core.Domain;
 using Passenger.Infrastructure.Commands;
 using Passenger.Infrastructure.Commands.Drivers;
 using Passenger.Infrastructure.Services;
@@ -16,7 +17,8 @@ namespace Passenger.Infrastructure.Handlers.Drivers
 
         public async Task HandleAsync(CreateDriver command)
         {
-            await Task.CompletedTask;
+            await _driverService.CreateAsync(command.UserId);
+            await _driverService.SetVehicleAsync(command.UserId, command.VehicleBrand, command.VehicleName, command.VehicleSeats);
         }
     }
 }

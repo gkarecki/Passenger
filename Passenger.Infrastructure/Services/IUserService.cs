@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Passenger.Infrastructure.DTO;
 
@@ -7,7 +8,8 @@ namespace Passenger.Infrastructure.Services
     public interface IUserService : IService
     {
         Task<UserDTO> GetAsync(string email);
-        Task RegisterAsync(Guid userId, string email, string username, string password, string role);
+        Task RegisterAsync(Guid userId, string email, string username, string fullname, string password, string role);
         Task LoginAsync(string email, string password);
+        Task<IEnumerable<UserDTO>> BrowseAsync();
     }
 }

@@ -25,7 +25,7 @@ namespace Passenger.Tests.Services
             encrypterMock.Setup(x => x.GetSalt(It.IsAny<string>())).Returns("hash");
             encrypterMock.Setup(x => x.GetHash(It.IsAny<string>(),It.IsAny<string>())).Returns("salt");
             var userService = new UserService(userRepositoryMock.Object,encrypterMock.Object, mapperMock.Object);
-            await userService.RegisterAsync(Guid.NewGuid(),"user@email.com", "user", "fullName", "secret");
+            await userService.RegisterAsync(Guid.NewGuid(),"user@email.com", "user", "fullName", "secret", "user");
 
             userRepositoryMock.Verify(x => x.AddAsync(It.IsAny<User>()), Times.Once);
         }
@@ -40,7 +40,7 @@ namespace Passenger.Tests.Services
 
             var userService = new UserService(userRepositoryMock.Object,encrypterMock.Object, mapperMock.Object);
             await userService.GetAsync("user1@rmail.com");
-            var user = new User(Guid.NewGuid(),"user1@rmail.com", "user1", "fullName", "secret", "salt");
+            var user = new User(Guid.NewGuid(),"user1@rmail.com", "user1", "fullName", "secret", "salt", "user");
 
             userRepositoryMock.Setup(x => x.GetAsync(It.IsAny<string>())).ReturnsAsync(user);
             userRepositoryMock.Verify(x => x.GetAsync(It.IsAny<string>()), Times.Once());
