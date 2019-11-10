@@ -8,6 +8,7 @@ using Passenger.Infrastructure.Extensions;
 
 namespace Passenger.Api.Controllers
 {
+    [Route("api/[controller]/[action]")]
     public class LoginController : ApiControllerBase
     {
         private readonly IMemoryCache _memoryCache;
@@ -15,7 +16,7 @@ namespace Passenger.Api.Controllers
         {
             _memoryCache = memoryCache;
         }
- 
+        [HttpPost]
         public async Task<IActionResult> Post ([FromBody]Login command)
         {
             command.TokenId = Guid.NewGuid();

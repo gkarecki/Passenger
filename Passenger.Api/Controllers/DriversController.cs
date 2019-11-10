@@ -6,10 +6,13 @@ using Passenger.Infrastructure.Commands.Drivers;
 using Passenger.Infrastructure.Commands.Users;
 using Passenger.Infrastructure.Services;
 
-namespace Passenger.Api.Controllers {
+namespace Passenger.Api.Controllers
+{
+    [Route("api/[controller]/[action]")]
     public class DriversController : ApiControllerBase {
         private readonly IDriverService _driverService;
-        public DriversController (ICommandDispatcher commandDispatcher, IDriverService driverService) : base (commandDispatcher) {
+        public DriversController (ICommandDispatcher commandDispatcher, IDriverService driverService) : base (commandDispatcher) 
+        {
             _driverService = driverService;
         }
         [HttpGet]
@@ -19,7 +22,7 @@ namespace Passenger.Api.Controllers {
 
             return Json(drivers);
         } 
-        [HttpPost ("")]
+        [HttpPost]
         public async Task<IActionResult> Put ([FromBody]CreateDriver command) {
             await CommandDispatcher.DispatchAsync(command);
 

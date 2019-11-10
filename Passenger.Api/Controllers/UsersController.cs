@@ -8,7 +8,7 @@ using Passenger.Infrastructure.Settings;
 
 namespace Passenger.Api.Controllers
 {
-    
+    [Route("api/[controller]/[action]")]
     public class UsersController : ApiControllerBase
     {
         private readonly IUserService _userservice;
@@ -37,7 +37,7 @@ namespace Passenger.Api.Controllers
 
             return Json(users);
         } 
-        [HttpPost("")]
+        [HttpPost]
         public async Task<IActionResult> Post([FromBody]CreateUser command)
         {
             await CommandDispatcher.DispatchAsync(command);

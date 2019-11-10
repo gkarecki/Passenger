@@ -20,11 +20,11 @@ namespace Passenger.Core.Domain
             UserId = user.Id;
             Name = user.Username;
         }
-        public Driver(Guid userId, string name, string brand, int seats)
+        public Driver(Guid userId,Vehicle vehicle)
         {
             // Id = new Guid();
             SetUserId(userId);
-            SetVehicle(name , brand, seats);
+            SetVehicle(vehicle);
         }
         public void SetUserId(Guid userId)
         {
@@ -35,11 +35,11 @@ namespace Passenger.Core.Domain
             UserId = userId;
         }
 
-        public void SetVehicle(string name, string brand, int seats)
+        public void SetVehicle(Vehicle vehicle)
         {
             // Vehicle vehicle = new Vehicle(name, brand, seats); //zastąpiłem metodą Create()
             // Vehicle = vehicle;
-            Vehicle = Vehicle.Create(name, brand, seats);
+            Vehicle = vehicle;
             UpdatedAt = DateTime.UtcNow;
         }
     }

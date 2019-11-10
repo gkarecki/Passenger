@@ -7,6 +7,7 @@ using Passenger.Infrastructure.Services;
 
 namespace Passenger.Api.Controllers
 {
+    [Route("api/[controller]/[action]")]
     public class AccountController : ApiControllerBase
     {
        
@@ -16,7 +17,7 @@ namespace Passenger.Api.Controllers
             _jwtHandler = jwtHandler;
         }
 
-        [HttpGet("")]
+        [HttpGet]
         [Route("token")]
         public IActionResult Get()
         {
@@ -24,7 +25,7 @@ namespace Passenger.Api.Controllers
             return Json(token);
         }
 
-        [HttpPut("")]
+        [HttpPut]
         [Route("password")]
         public async Task<IActionResult> Put([FromBody]ChangeUserPassword command)
         {

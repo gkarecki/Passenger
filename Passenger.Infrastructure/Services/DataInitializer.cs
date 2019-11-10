@@ -28,9 +28,10 @@ namespace Passenger.Infrastructure.Services
                 _logger.LogTrace($"Created new user: {userName}");
                 tasks.Add(_userService.RegisterAsync(userId,$"user{i}@test.com", userName, $"user{i}FullName", $"user{i}!", "normalUser"));
                 tasks.Add(_driverService.CreateAsync(userId));
-                tasks.Add(_driverService.SetVehicleAsync(userId, "bmw", "i8", 5));
+                tasks.Add(_driverService.SetVehicleAsync(userId, "bmw", "i8"));
                 _logger.LogTrace($"Created new driver: {userName}");
             }
+            
             for(var i = 1; i<3; i++)
             {
                 var userId = Guid.NewGuid();
