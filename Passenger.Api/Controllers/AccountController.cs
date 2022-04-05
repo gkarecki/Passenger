@@ -28,7 +28,7 @@ namespace Passenger.Api.Controllers
         [Route("password")]
         public async Task<IActionResult> Put([FromBody]ChangeUserPassword command)
         {
-            await CommandDispatcher.DispatchAsync(command);
+            await _commandDispatcher.DispatchAsync(command);
 
             return NoContent();
         }

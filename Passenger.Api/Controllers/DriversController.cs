@@ -24,7 +24,7 @@ namespace Passenger.Api.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Put ([FromBody]CreateDriver command) {
-            await CommandDispatcher.DispatchAsync(command);
+            await _commandDispatcher.DispatchAsync(command);
 
             return Created($"users/{command.UserId}", new object());
         }
