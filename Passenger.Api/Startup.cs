@@ -1,25 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Passenger.Core.Repositories;
+using Microsoft.OpenApi.Models;
 using Passenger.Infrastructure.IoC;
 using Passenger.Infrastructure.IoC.Modules;
-using Passenger.Infrastructure.Mappers;
-using Passenger.Infrastructure.Repositories;
 using Passenger.Infrastructure.Services;
 using Passenger.Infrastructure.Settings;
 
@@ -36,60 +28,66 @@ namespace Passenger.Api
         public IContainer ApplicationContainer { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthorization( x => x.AddPolicy("admin", p => p.RequireRole("admin")) );
             services.AddMemoryCache();
-            var key = Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]);
-            services.AddAuthentication(x => {
-                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(x => {
-                    x.RequireHttpsMetadata = false;
-                    x.SaveToken = true;
-                    x.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidIssuer = Configuration["Jwt:Issuer"],
-                        ValidateAudience = false
-                    };
-                });
+            //services.AddAuthorization( x => x.AddPolicy("admin", p => p.RequireRole("admin")) );
+            //var key = Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]);
+            //services.AddAuthentication(x => {
+            //        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    })
+            //    .AddJwtBearer(x => {
+            //        x.RequireHttpsMetadata = false;
+            //        x.SaveToken = true;
+            //        x.TokenValidationParameters = new TokenValidationParameters
+            //        {
+            //            IssuerSigningKey = new SymmetricSecurityKey(key),
+            //            ValidIssuer = Configuration["Jwt:Issuer"],
+            //            ValidateAudience = false
+            //        };
+            //    });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            
-            var builder = new ContainerBuilder();
-            builder.Populate(services);
-            builder.RegisterModule(new ContainerModule(Configuration));
-            // builder.RegisterModule(new SettingsModule(Configuration));
-            ApplicationContainer = builder.Build();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Passenger", Version = "v1" });
+            });
 
-            return new AutofacServiceProvider(ApplicationContainer);
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime appLifetime)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseHsts();
-            }
-            
-            var generalSettings = app.ApplicationServices.GetService<GeneralSettings>();
-            if(generalSettings.SeedData)
-            {
-                var dataInitializer = app.ApplicationServices.GetService<IDataInitializer>();
-                dataInitializer.SeedAsync();
+
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Passenger v1");
+                });
+                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Passenger v1"));
             }
 
-            app.UseAuthentication();
             app.UseHttpsRedirection();
-            app.UseMvc();
-            appLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
+            //var generalSettings = app.ApplicationServices.GetService<GeneralSettings>();
+            //if (generalSettings.SeedData)
+            //{
+            //    var dataInitializer = app.ApplicationServices.GetService<IDataInitializer>();
+            //    dataInitializer.SeedAsync();
+            //}
         }
         
     }

@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Passenger.Infrastructure.Commands;
@@ -7,16 +6,17 @@ using Passenger.Infrastructure.Services;
 
 namespace Passenger.Api.Controllers
 {
+    [Route("api/[controller]")]
     public class AccountController : ApiControllerBase
     {
-       
         private readonly IJwtHandler _jwtHandler;
+
         public AccountController(ICommandDispatcher commandDispatcher, IJwtHandler jwtHandler) : base(commandDispatcher)
         {
             _jwtHandler = jwtHandler;
         }
 
-        [HttpGet("")]
+        [HttpGet]
         [Route("token")]
         public IActionResult Get()
         {
@@ -24,7 +24,7 @@ namespace Passenger.Api.Controllers
             return Json(token);
         }
 
-        [HttpPut("")]
+        [HttpPut]
         [Route("password")]
         public async Task<IActionResult> Put([FromBody]ChangeUserPassword command)
         {

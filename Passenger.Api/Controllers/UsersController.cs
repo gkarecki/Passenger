@@ -1,21 +1,18 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Passenger.Infrastructure.Commands;
 using Passenger.Infrastructure.Commands.Users;
 using Passenger.Infrastructure.Services;
-using Passenger.Infrastructure.Settings;
 
 namespace Passenger.Api.Controllers
 {
-    
+    [Route("api/[controller]")]
     public class UsersController : ApiControllerBase
     {
         private readonly IUserService _userservice;
-        private readonly GeneralSettings _settigns;
-        public UsersController(IUserService userService, ICommandDispatcher commandDispatcher, GeneralSettings settings) : base(commandDispatcher)
+
+        public UsersController(IUserService userService, ICommandDispatcher commandDispatcher) : base(commandDispatcher)
         {
-            _settigns = settings;
             _userservice = userService;
         }
 
@@ -30,6 +27,7 @@ namespace Passenger.Api.Controllers
             }
             return Json(user);
         }
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -37,7 +35,8 @@ namespace Passenger.Api.Controllers
 
             return Json(users);
         } 
-        [HttpPost("")]
+
+        [HttpPost]
         public async Task<IActionResult> Post([FromBody]CreateUser command)
         {
             await CommandDispatcher.DispatchAsync(command);

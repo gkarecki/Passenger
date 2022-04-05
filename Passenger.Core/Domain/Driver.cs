@@ -15,6 +15,7 @@ namespace Passenger.Core.Domain
 
         protected Driver()
         {}
+
         public Driver(User user)
         {
             UserId = user.Id;

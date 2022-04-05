@@ -1,10 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>Passenger.Core</AssemblyName>
     <PackageId>Passenger.Core</PackageId>
-    <!-- <NetStandardImplicitPackageVersion>2.1.2</NetStandardImplicitPackageVersion> -->
   </PropertyGroup>
 
 </Project>

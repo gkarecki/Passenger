@@ -2,7 +2,7 @@
 
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <!-- <ItemGroup>
     <None Include="appsettings.json" CopyToOutputDirectory="PreserveNewest">
