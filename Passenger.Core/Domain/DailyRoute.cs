@@ -7,14 +7,16 @@ namespace Passenger.Core.Domain
     public class DailyRoute
     {
         private ISet<PassengerNode> _passengerNodes = new HashSet<PassengerNode>();
+
         public Guid Id { get; protected set; }
         public Route Route { get; protected set; }
         public IEnumerable<PassengerNode> PassengerNodes {get ; protected set;}
         
-        protected DailyRoute()
+        protected DailyRoute() //some libraries requires this constructor to serialize data without any problem ( read data )
         {
             Id = Guid.NewGuid();
         }
+
         public void AddPassengerNode(Passenger passenger, Node node)
         {
             var passengerNode = GetPassengerNode(passenger);
@@ -24,6 +26,7 @@ namespace Passenger.Core.Domain
             }
             _passengerNodes.Add(PassengerNode.Create(passenger, node));
         }
+
         public void RemovePassengerNode(Passenger passenger)
         {
             var passengerNode = GetPassengerNode(passenger);
@@ -33,6 +36,7 @@ namespace Passenger.Core.Domain
             }
             _passengerNodes.Remove(passengerNode);
         }
+
         private PassengerNode GetPassengerNode(Passenger passenger) 
             => _passengerNodes.SingleOrDefault(x => x.Passenger.UserId == passenger.UserId);
     }

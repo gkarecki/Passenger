@@ -5,7 +5,7 @@ using Passenger.Infrastructure.Mappers;
 
 namespace Passenger.Infrastructure.IoC
 {
-    public class ContainerModule : Autofac.Module
+    public class ContainerModule : Module
     {
         private readonly IConfiguration _configuration;
         public ContainerModule(IConfiguration configuration)

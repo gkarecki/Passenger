@@ -10,7 +10,7 @@ namespace Passenger.Api.Controllers
  
         protected ApiControllerBase(ICommandDispatcher commandDispatcher)
         {
-            this.CommandDispatcher = commandDispatcher;
+            CommandDispatcher = commandDispatcher;
         }
     }
 }

@@ -8,8 +8,8 @@ namespace Passenger.Core.Domain
         public Node StartNode { get; protected set; }
         public Node StopNode { get; protected set; }
 
-        protected Route()
-        {}
+        protected Route() { } //some libraries requires this constructor to serialize data without any problem ( read data )
+
         public Route(Node startNode, Node stopNode)
         {
             Id = new Guid();

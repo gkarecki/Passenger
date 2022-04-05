@@ -6,7 +6,8 @@ namespace Passenger.Core.Domain
     public class User
     {
         private static readonly Regex NameRegex = new Regex("^(?![_.-])(?!.*[_.-]{2})[a-zA-Z0-9._.-]+(?<![_.-])$");
-        public Guid Id {get; protected set;}    //global unique identifier
+
+        public Guid Id {get; protected set;} 
         public string Email {get; protected set;}
         public string Password {get; protected set;}
         public string Salt {get; protected set;}
@@ -17,9 +18,7 @@ namespace Passenger.Core.Domain
         public string Role {get; protected set;}
         public DateTime CreateAt {get; protected set;}
 
-        protected User()    //niektóre bibloteki wymagają tego konstruktora, aby nie mieć kłopotu z serializacją naszych danych (odczytem)
-        {                   //some libraries requires this contructor to serialize data without any problem ( read data )
-        }
+        protected User() { } //some libraries requires this constructor to serialize data without any problem ( read data )
 
         public User(Guid userId,string email, string username, string fullName, string password, string salt, string role) 
         {
@@ -38,7 +37,8 @@ namespace Passenger.Core.Domain
             {
                 throw new Exception("Please provide valid data. There is a null or white space. ");
             }
-            else if (Password == password)
+
+            if (Password == password)
             {
                 return;
             }
@@ -52,7 +52,8 @@ namespace Passenger.Core.Domain
             {
                 throw new Exception("Please provide valid data. There is a null or white space. ");
             }
-            else if (Email == email)
+
+            if (Email == email)
             {
                 return;
             }
@@ -66,11 +67,13 @@ namespace Passenger.Core.Domain
             {
                 throw new Exception("Username is invalid.");
             }
-            else if(string.IsNullOrWhiteSpace(username))
+
+            if(string.IsNullOrWhiteSpace(username))
             {
                 throw new Exception("Please provide valid data. There is a null or white space. ");
             }
-            else if (Username == username)
+
+            if (Username == username)
             {
                 return;
             }
@@ -84,12 +87,13 @@ namespace Passenger.Core.Domain
             {
                 throw new Exception("Please provide valid data. There is a null or white space. ");
             }
-            else if (FullName == fullName)
+
+            if (FullName == fullName)
             {
                 return;
             }
-            FullName = fullName;   
 
+            FullName = fullName;
         }
     }
 }

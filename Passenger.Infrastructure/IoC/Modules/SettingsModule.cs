@@ -1,4 +1,3 @@
-using System.Reflection;
 using Autofac;
 using Microsoft.Extensions.Configuration;
 using Passenger.Infrastructure.Extensions;
@@ -6,7 +5,7 @@ using Passenger.Infrastructure.Settings;
 
 namespace Passenger.Infrastructure.IoC.Modules
 {
-    public class SettingsModule : Autofac.Module
+    public class SettingsModule : Module
     {
         private readonly IConfiguration _configuration;
         public SettingsModule(IConfiguration configuration)

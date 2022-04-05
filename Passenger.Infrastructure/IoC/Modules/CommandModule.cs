@@ -1,7 +1,6 @@
 using System.Reflection;
 using Autofac;
 using Passenger.Infrastructure.Commands;
-using Passenger.Infrastructure.Commands.Users;
 
 namespace Passenger.Infrastructure.IoC.Modules
 {

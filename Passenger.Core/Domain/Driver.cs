@@ -5,7 +5,6 @@ namespace Passenger.Core.Domain
 {
     public class Driver
     {
-        // public Guid Id { get; protected set; } //now not necessary
         public Guid UserId { get; protected set; }
         public string Name { get; protected set; }
         public Vehicle Vehicle { get; protected set; }
@@ -13,20 +12,20 @@ namespace Passenger.Core.Domain
         public IEnumerable<DailyRoute> DailyRoutes {get; protected set;}
         public DateTime UpdatedAt {get; private set;}
 
-        protected Driver()
-        {}
+        protected Driver() { } //some libraries requires this constructor to serialize data without any problem ( read data )
 
         public Driver(User user)
         {
             UserId = user.Id;
             Name = user.Username;
         }
+
         public Driver(Guid userId, string name, string brand, int seats)
         {
-            // Id = new Guid();
             SetUserId(userId);
             SetVehicle(name , brand, seats);
         }
+
         public void SetUserId(Guid userId)
         {
             if(UserId == userId)
@@ -38,12 +37,8 @@ namespace Passenger.Core.Domain
 
         public void SetVehicle(string name, string brand, int seats)
         {
-            // Vehicle vehicle = new Vehicle(name, brand, seats); //zastąpiłem metodą Create()
-            // Vehicle = vehicle;
             Vehicle = Vehicle.Create(name, brand, seats);
             UpdatedAt = DateTime.UtcNow;
         }
     }
 }
-
-// To do: konstrukotry protected wszędzie ; konstruktory publiczne, gdzie bedziemy ustatlali identyfikatory ; będziemy pamiętali, ze będzie przekazany użytkowanik, jego pojazd;

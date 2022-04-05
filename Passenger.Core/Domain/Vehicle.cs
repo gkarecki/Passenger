@@ -2,14 +2,13 @@ using System;
 
 namespace Passenger.Core.Domain
 {
-    public class Vehicle    // ValueObject tzn. Immutable (niezmienialny) 
+    public class Vehicle
     {
         public string Name { get; protected set; }
         public string Brand { get; protected set; }
         public int Seats { get; protected set; }
         
-        protected Vehicle()
-        {}
+        protected Vehicle() { } //some libraries requires this constructor to serialize data without any problem ( read data )
 
         protected Vehicle(string name, string brand, int seats)
         {
@@ -24,7 +23,8 @@ namespace Passenger.Core.Domain
             {
                 throw new Exception("Please provide valid data. There is a null or white space. ");
             }
-            else if (Name == name)
+
+            if (Name == name)
             {
                 return;
             }
@@ -37,7 +37,8 @@ namespace Passenger.Core.Domain
             {
                 throw new Exception("Please provide valid data. There is a null or white space. ");
             }
-            else if (Brand == brand)
+
+            if (Brand == brand)
             {
                 return;
             }
@@ -53,7 +54,6 @@ namespace Passenger.Core.Domain
 
             Seats = seats;
         }
-        public static Vehicle Create(string name, string brand, int seats) //metoda do tworzenia w ukrty sposób obiektu Vehicle
-                                => new Vehicle(brand, name, seats);
+        public static Vehicle Create(string name, string brand, int seats) => new Vehicle(brand, name, seats);
     }
 }

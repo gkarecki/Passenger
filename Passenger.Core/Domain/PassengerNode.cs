@@ -5,8 +5,7 @@ namespace Passenger.Core.Domain
         public Node Node {  get; protected set; }
         public Passenger Passenger { get; protected set;}
 
-        protected PassengerNode()
-        {}
+        protected PassengerNode() { } //some libraries requires this constructor to serialize data without any problem ( read data )
 
         public PassengerNode(Passenger passenger, Node node)
         {
