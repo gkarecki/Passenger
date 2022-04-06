@@ -55,6 +55,7 @@ namespace Passenger.Api
             });
 
             services.AddControllers();
+            services.AddRouting(options => options.LowercaseUrls = true);
             services.AddOptions();
         }
 

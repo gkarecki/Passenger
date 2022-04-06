@@ -7,11 +7,11 @@ using Passenger.Infrastructure.Services;
 namespace Passenger.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class AccountController : ApiControllerBase
+    public class AccountsController : ApiControllerBase
     {
         private readonly IJwtHandler _jwtHandler;
 
-        public AccountController(ICommandDispatcher commandDispatcher, IJwtHandler jwtHandler) : base(commandDispatcher)
+        public AccountsController(ICommandDispatcher commandDispatcher, IJwtHandler jwtHandler) : base(commandDispatcher)
         {
             _jwtHandler = jwtHandler;
         }
