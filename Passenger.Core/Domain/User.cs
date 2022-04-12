@@ -27,6 +27,7 @@ namespace Passenger.Core.Domain
             SetUsername(username);
             SetFullName(fullName);
             SetPassword(password);
+            SetSalt(salt);
             Role = role;
             CreateAt = DateTime.UtcNow;
         }
@@ -94,6 +95,21 @@ namespace Passenger.Core.Domain
             }
 
             FullName = fullName;
+        }
+
+        public void SetSalt(string salt)
+        {
+            if (string.IsNullOrWhiteSpace(salt))
+            {
+                throw new Exception("Please provide valid data. There is a null or white space. ");
+            }
+
+            if (Salt == salt)
+            {
+                return;
+            }
+
+            Salt = salt;
         }
     }
 }

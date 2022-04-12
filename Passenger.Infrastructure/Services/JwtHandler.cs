@@ -16,6 +16,7 @@ namespace Passenger.Infrastructure.Services
         {
             _settings = settings;
         }
+
         public JwtDTO CreateToken(string email, string role)
         {
             var now = DateTime.Now;

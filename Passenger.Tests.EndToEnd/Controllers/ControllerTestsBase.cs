@@ -1,52 +1,54 @@
-using System.IO;
-using System.Net.Http;
-using System.Text;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using Passenger.Api;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
+using Xunit;
 
 namespace Passenger.Tests.EndToEnd.Controllers
 {
-    public abstract class ControllerTestsBase
+    public abstract class ControllerTestsBase : IClassFixture<WebApplicationFactory<Startup>>
     {
-        protected readonly TestServer Server;
-        protected readonly HttpClient Client;
+        private readonly List<Type> _controllerTypes;
+        private readonly WebApplicationFactory<Startup> _factory;
+        protected readonly HttpClient _client;
 
-        // public IWebHostBuilder CreateWebHostBuilder()
-        // {
-        //     var config = new ConfigurationBuilder()
-        //         .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-        //         .Build();
-
-        //     var host = new WebHostBuilder()
-        //         .UseConfiguration(config)
-        //         .UseStartup<Startup>() // Point to the test startup first
-        //         .UseSetting(WebHostDefaults.ApplicationKey, typeof(Startup).GetTypeInfo().Assembly.GetName().Name); // Set the "right" application after the startup's been registerted
-
-        //     return host;
-        // }
-        // protected ControllerTestsBase()
-        // {
-        //     Server = new TestServer(CreateWebHostBuilder()              
-        //         .UseStartup<Startup>());
-        //     Client = Server.CreateClient();
-        // }
-
-        protected ControllerTestsBase()
+        protected ControllerTestsBase(WebApplicationFactory<Startup> factory)
         {
-            Server = new TestServer(new WebHostBuilder() 
-                .UseEnvironment("Development") 
-                .UseContentRoot(Directory.GetCurrentDirectory()) 
-                .UseConfiguration(new ConfigurationBuilder() 
-                    .SetBasePath(Directory.GetCurrentDirectory()) 
-                    .AddJsonFile("appsettings.json") 
-                    .Build()) 
-                .UseStartup<Startup>()); 
-                
-                Client = Server.CreateClient();
+            //_controllerTypes = typeof(Startup)
+            //    .Assembly
+            //    .GetTypes()
+            //    .Where(t => t.IsSubclassOf(typeof(ApiControllerBase)))
+            //    .ToList();
+
+            //_factory = factory.WithWebHostBuilder(builder =>
+            //{
+            //    builder.ConfigureServices(services =>
+            //    {
+            //        _controllerTypes.ForEach(c => services.AddScoped(c));
+            //    });
+            //});
+
+            _client = factory.CreateClient();
         }
+
+        //[Fact]
+        //[Fact(Skip="TODO: add dependencies")]
+        //public void configure_services_for_controllers_registers_all_dependencies()
+        //{
+        //    //arrange
+        //    var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
+        //    using var scope = scopeFactory.CreateScope();
+
+        //    // assert
+        //    _controllerTypes.ForEach(t =>
+        //    {
+        //        var controller = scope.ServiceProvider.GetService(t);
+        //        controller.Should().NotBeNull();
+        //    });
+        //}
 
         protected static StringContent GetPayload(object data)
         {

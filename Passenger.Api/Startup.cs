@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
+﻿using Autofac;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,10 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Passenger.Infrastructure.Commands;
 using Passenger.Infrastructure.IoC;
 using Passenger.Infrastructure.Services;
 using Passenger.Infrastructure.Settings;
+using System.Text;
 
 namespace Passenger.Api
 {
@@ -99,6 +96,6 @@ namespace Passenger.Api
                 dataInitializer.SeedAsync();
             }
         }
-        
+
     }
 }

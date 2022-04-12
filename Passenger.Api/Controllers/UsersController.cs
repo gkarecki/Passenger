@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Passenger.Infrastructure.Commands;
 using Passenger.Infrastructure.Commands.Users;
 using Passenger.Infrastructure.Services;
+using System.Threading.Tasks;
 
 namespace Passenger.Api.Controllers
 {
@@ -41,7 +41,7 @@ namespace Passenger.Api.Controllers
         {
             await _commandDispatcher.DispatchAsync(command);
 
-            return Created($"users/{command.Email}", new object());
+            return Created($"api/users/{command.Email}", new object());
         }
 
     }

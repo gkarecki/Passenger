@@ -1,61 +1,76 @@
-using System.Net;
-using System.Threading.Tasks;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
-using NUnit.Framework;
+using Passenger.Api;
 using Passenger.Infrastructure.Commands.Users;
 using Passenger.Infrastructure.DTO;
-// using Xunit;
+using System;
+using System.Net;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Passenger.Tests.EndToEnd.Controllers
 {
-    [TestFixture]
     public class UsersControllerTests : ControllerTestsBase
     {
-        // [Fact]
-        [Test]
-        public async Task given_valid_email_user_shuld_exists()
+        public UsersControllerTests(WebApplicationFactory<Startup> factory) : base(factory)
         {
-            // Act
-            var email = "user1@test.com";
-            var user = await GetUserAsync(email);
-            user.Email.Should().EndWithEquivalent(email);
-            // Assert.Equal(user.Email, email);
         }
 
-        // [Fact]
-        [Test]
-        public async Task given_valid_email_user_shuld_not_exists()
+        [Fact]
+        public async Task given_valid_email_user_should_exists()
         {
-            // Act
+            // Arrange
+            var email = "user1@test.com";
+
+            //Act
+            var user = await GetUserAsync(email);
+
+            //Assert
+            user.Email.Should().EndWithEquivalent(email);
+        }
+
+        [Fact]
+        public async Task given_valid_email_user_should_not_exists()
+        {
+            // Arrange
             var email = "user100@email.com";
-            var response = await Client.GetAsync($"/users/{email}");
             
+            // Act
+            var response = await _client.GetAsync($"api/users/{email}");
+            
+            //Assert
             response.StatusCode.Should().BeEquivalentTo(HttpStatusCode.NotFound);
         }
-        // [Fact]
-        [Test]
-        public async Task given_unique_email_user_shuld_be_created()
+
+        [Fact]
+        public async Task given_unique_email_user_should_be_created()
         {
+            // Arrange
+            var rnd = new Random();
             var command = new CreateUser
             {
-                Email = "test@email.com",
-                Username = "test",
+                Email = $"test{rnd.Next()}@email.com",
+                Username = "testUser",
+                FullName = "testFullName",
                 Password = "secret",
-                Role = "admin"
+                Role = "user"
             };
             var payload = GetPayload(command);
-            var response = await Client.PostAsync("users", payload);
-            response.StatusCode.Should().BeEquivalentTo(HttpStatusCode.Created);
-            response.Headers.Location.ToString().Should().BeEquivalentTo($"users/{command.Email}");
 
+            // Act
+            var response = await _client.PostAsync("api/users", payload);
             var user = await GetUserAsync(command.Email);
+
+            //Assert
+            response.StatusCode.Should().BeEquivalentTo(HttpStatusCode.Created);
+            response.Headers.Location.ToString().Should().BeEquivalentTo($"api/users/{command.Email}");
             user.Email.Should().EndWithEquivalent(command.Email);
         }
 
         private async Task<UserDTO> GetUserAsync(string email)
         {
-            var response = await Client.GetAsync($"/users/{email}");
+            var response = await _client.GetAsync($"api/users/{email}");
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
 

@@ -12,6 +12,7 @@ namespace Passenger.Infrastructure.IoC
         {
             _configuration = configuration;
         }
+
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterInstance(AutoMapperConfig.Initialize())

@@ -1,10 +1,9 @@
-using System;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using Passenger.Infrastructure.Commands;
 using Passenger.Infrastructure.Commands.Accounts;
 using Passenger.Infrastructure.Extensions;
 using Passenger.Infrastructure.Services;
+using System.Threading.Tasks;
 
 namespace Passenger.Infrastructure.Handlers.Users
 {

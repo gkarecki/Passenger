@@ -1,10 +1,10 @@
-using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Passenger.Infrastructure.Commands;
 using Passenger.Infrastructure.Commands.Accounts;
 using Passenger.Infrastructure.Extensions;
+using System;
+using System.Threading.Tasks;
 
 namespace Passenger.Api.Controllers
 {

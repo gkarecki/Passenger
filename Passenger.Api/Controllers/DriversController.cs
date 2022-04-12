@@ -1,10 +1,10 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Passenger.Infrastructure.Commands;
 using Passenger.Infrastructure.Commands.Drivers;
 using Passenger.Infrastructure.Services;
+using System.Threading.Tasks;
 
-namespace Passenger.Api.Controllers 
+namespace Passenger.Api.Controllers
 {
     [Route("api/[controller]")]
     public class DriversController : ApiControllerBase {
@@ -26,7 +26,7 @@ namespace Passenger.Api.Controllers
         public async Task<IActionResult> Put ([FromBody]CreateDriver command) {
             await _commandDispatcher.DispatchAsync(command);
 
-            return Created($"users/{command.UserId}", new object());
+            return Created($"api/users/{command.UserId}", new object());
         }
 
     }
